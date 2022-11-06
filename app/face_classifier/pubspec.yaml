@@ -39,6 +39,8 @@ dependencies:
   dotted_border: ^2.0.0+3
   dio: ^4.0.6
   get: ^4.6.5
+  http_parser: ^4.0.2
+  share_plus: ^6.2.0
 
 dev_dependencies:
   flutter_test:

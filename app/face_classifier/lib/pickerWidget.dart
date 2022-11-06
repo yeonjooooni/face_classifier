@@ -1,8 +1,8 @@
 import 'uploadScreen.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +12,12 @@ import 'package:dotted_border/dotted_border.dart';
 class PickerWidget extends StatefulWidget{
     PickerWidget({Key? key}): super(key: key);
     List<XFile> pickedImgs = [];
+
+    List<XFile> getImageAtIndex(List<int> indexes) {
+        return List.generate(indexes.length,
+                (index) => pickedImgs[indexes[index]]
+        );
+    }
 
     bool imgEmpty(){
         return pickedImgs.isEmpty;
