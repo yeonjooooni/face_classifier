@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'pickerWidget.dart';
 import 'resultScreen.dart';
+import 'package:dio/dio.dart';
 
 class MainApp extends StatelessWidget {
     @override
@@ -75,11 +76,36 @@ class ImgUploaderState extends State<ImgUploader> {
                                       CupertinoButton.filled(
                                           onPressed: !picker.imgEmpty() && !pickerInd.imgEmpty() ?
                                               () async {
-                                              picker.uploadImage();
-                                              pickerInd.uploadImage();
+                                              Dio dio = Dio();
+                                              String id = '';
 
+                                              try {
+                                                  Response res = await dio.get('userid');
+                                                  if (res.statusCode == 200) {
+                                                      id = res.data;
+                                                  }
+                                              } catch (e) {
+                                                  Exception(e);
+                                              } finally {
+                                                  dio.close();
+                                              }
 
-                                              List<List<int>> indexes = [[0, 0, 0, 0, 0], [], [0], [0, 0]]; // 예시이고 다운로드 받을 필요가 있음
+                                              picker.uploadImage('/$id/image');
+                                              pickerInd.uploadImage('/$id/imageInd');
+
+                                              List<List<int>> indexes = [[]];
+
+                                              try {
+                                                  Response res = await dio.get('$id/index');
+                                                  if (res.statusCode == 200) {
+                                                      indexes = res.data;
+                                                  }
+                                              } catch (e) {
+                                                  Exception(e);
+                                              } finally {
+                                                  dio.close();
+                                              }
+
                                               List<List<XFile>> images = List.generate(indexes.length,
                                                   (index) => picker.getImageAtIndex(indexes[index])
                                               );

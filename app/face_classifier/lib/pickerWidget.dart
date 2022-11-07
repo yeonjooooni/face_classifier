@@ -23,14 +23,13 @@ class PickerWidget extends StatefulWidget{
         return pickedImgs.isEmpty;
     }
 
-    void uploadImage() async{
+    void uploadImage(String pos) async{
         Dio dio = Dio();
-        dio.options.headers["authorization"] = "Access_Token";
         final List<MultipartFile> files = pickedImgs.map((img) => MultipartFile.fromFileSync(img.path,  contentType: MediaType("image", "jpg"))).toList();
         FormData formData = FormData.fromMap({"key": files});
         dio.options.contentType = 'multipart/form-data';
         try {
-            final res = await dio.post("/image", data: formData);
+            final res = await dio.post(pos, data: formData);
             if(res.statusCode == 200){
                 // ok
             } else {
