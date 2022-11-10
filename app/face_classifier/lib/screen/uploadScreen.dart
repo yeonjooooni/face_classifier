@@ -80,7 +80,7 @@ class ImgUploaderState extends State<ImgUploader> {
                                               String id = '1';
 
                                               try {
-                                                  Response res = await dio.get('https://test1234aaabbb.herokuapp.com/photo/hello');
+                                                  Response res = await dio.get('https://faceclassifier.herokuapp.com/photo/hello');
                                                   if (res.statusCode == 200) {
                                                       debugPrint(res.data);
                                                   }
@@ -91,13 +91,13 @@ class ImgUploaderState extends State<ImgUploader> {
                                               }
 
 
-                                              await picker.uploadImage('https://test1234aaabbb.herokuapp.com/photo/postphotos/');
-                                              await pickerInd.uploadImage('https://test1234aaabbb.herokuapp.com/photo/postphotos/');
+                                              await picker.uploadImage('https://faceclassifier.herokuapp.com/photo/Uploadedphotos/');
+                                              await pickerInd.uploadImage('https://faceclassifier.herokuapp.com/photo/Uploadedphotos/');
 
                                               dio = Dio();
 
                                               try {
-                                                Response res = await dio.get('https://test1234aaabbb.herokuapp.com/photo/hello');
+                                                Response res = await dio.get('https://faceclassifier.herokuapp.com/photo/hello');
                                                 if (res.statusCode == 200) {
                                                   debugPrint(res.data);
                                                 }
