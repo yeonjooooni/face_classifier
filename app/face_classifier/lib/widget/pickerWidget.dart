@@ -23,17 +23,16 @@ class PickerWidget extends StatefulWidget{
         return pickedImgs.isEmpty;
     }
 
-    Future<void> uploadImage(String pos) async{
+    Future<void> uploadImage(String pos, String id) async{
         for(int i = 0; i < pickedImgs.length; i++){
             Dio dio = Dio();
-            FormData formData = FormData.fromMap({'user_id' : 1, 'image': MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), contentType: MediaType('image', '*'))});
-            try {
-                final res = await dio.post(pos, data: formData);
-                if(res.statusCode == 200){
-                    for(int i = 0; i < res.data.length; i){
-                        debugPrint(res.data[i]);
-                    }
+            FormData body = FormData.fromMap({'user_id': 1});
 
+            body.files.add(MapEntry('image', MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), filename: id + '___' + pickedImgs[i].name)));
+            try {
+                final res = await dio.post(pos, data: body);
+                if(res.statusCode == 200){
+                    debugPrint('Ok');
                 } else {
                     // error
                     debugPrint(res.statusCode.toString());
