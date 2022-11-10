@@ -77,12 +77,12 @@ class ImgUploaderState extends State<ImgUploader> {
                                           onPressed: !picker.imgEmpty() && !pickerInd.imgEmpty() ?
                                               () async {
                                               Dio dio = Dio();
-                                              String id = '';
+                                              String id = '1';
 
                                               try {
-                                                  Response res = await dio.get('userid');
+                                                  Response res = await dio.get('https://test1234aaabbb.herokuapp.com/photo/hello');
                                                   if (res.statusCode == 200) {
-                                                      id = res.data;
+                                                      debugPrint(res.data);
                                                   }
                                               } catch (e) {
                                                   Exception(e);
@@ -90,21 +90,27 @@ class ImgUploaderState extends State<ImgUploader> {
                                                   dio.close();
                                               }
 
-                                              picker.uploadImage('/$id/image');
-                                              pickerInd.uploadImage('/$id/imageInd');
+
+                                              await picker.uploadImage('https://test1234aaabbb.herokuapp.com/photo/postphotos/');
+                                              await pickerInd.uploadImage('https://test1234aaabbb.herokuapp.com/photo/postphotos/');
+
+                                              dio = Dio();
+
+                                              try {
+                                                Response res = await dio.get('https://test1234aaabbb.herokuapp.com/photo/hello');
+                                                if (res.statusCode == 200) {
+                                                  debugPrint(res.data);
+                                                }
+                                              } catch (e) {
+                                                Exception(e);
+                                              } finally {
+                                                dio.close();
+                                              }
+
 
                                               List<List<int>> indexes = [[]];
 
-                                              try {
-                                                  Response res = await dio.get('$id/index');
-                                                  if (res.statusCode == 200) {
-                                                      indexes = res.data;
-                                                  }
-                                              } catch (e) {
-                                                  Exception(e);
-                                              } finally {
-                                                  dio.close();
-                                              }
+
 
                                               List<List<XFile>> images = List.generate(indexes.length,
                                                   (index) => picker.getImageAtIndex(indexes[index])
