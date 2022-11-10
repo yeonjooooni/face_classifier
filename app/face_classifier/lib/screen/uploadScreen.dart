@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'pickerWidget.dart';
+import 'package:face_classifier/widget/pickerWidget.dart';
 import 'resultScreen.dart';
 import 'package:dio/dio.dart';
 

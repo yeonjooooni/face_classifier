@@ -1,4 +1,4 @@
-import 'package:face_classifier/viewerWidget.dart';
+import 'package:face_classifier/widget/viewerWidget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';

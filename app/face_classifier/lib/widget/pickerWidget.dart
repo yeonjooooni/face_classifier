@@ -1,4 +1,4 @@
-import 'uploadScreen.dart';
+import 'package:face_classifier/screen/uploadScreen.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -32,8 +32,10 @@ class PickerWidget extends StatefulWidget{
             final res = await dio.post(pos, data: formData);
             if(res.statusCode == 200){
                 // ok
+
             } else {
                 // error
+                
                 return;
             }
         } catch (e) {
