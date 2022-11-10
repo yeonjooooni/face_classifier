@@ -26,7 +26,7 @@ class PickerWidget extends StatefulWidget{
     Future<void> uploadImage(String pos) async{
         for(int i = 0; i < pickedImgs.length; i++){
             Dio dio = Dio();
-            FormData formData = FormData.fromMap({'user_id' : 1, 'image': MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), contentType: new MediaType('image', '*'))});
+            FormData formData = FormData.fromMap({'user_id' : 1, 'image': MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), contentType: MediaType('image', '*'))});
             try {
                 final res = await dio.post(pos, data: formData);
                 if(res.statusCode == 200){
