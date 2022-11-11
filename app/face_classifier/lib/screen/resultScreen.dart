@@ -64,10 +64,7 @@ class ResultReporterState extends State<ResultReporter> {
                                                                     // share files ( mobile )
                                                                 }
                                                             ,
-                                                            child: const Icon(
-                                                                kIsWeb
-                                                                ? CupertinoIcons.arrow_down_to_line
-                                                                : CupertinoIcons.share,
+                                                            child: const Icon(CupertinoIcons.share,
                                                                 color: Colors.white,
                                                                 size: 24.0,
                                                             )

@@ -28,7 +28,7 @@ class PickerWidget extends StatefulWidget{
             Dio dio = Dio();
             FormData body = FormData.fromMap({'user_id': 1});
 
-            body.files.add(MapEntry('image', MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), filename: id + '___' + pickedImgs[i].name)));
+            body.files.add(MapEntry('image', MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), filename: pickedImgs[i].name)));
             try {
                 final res = await dio.post(pos, data: body);
                 if(res.statusCode == 200){

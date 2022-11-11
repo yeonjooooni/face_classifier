@@ -80,7 +80,7 @@ class ImgUploaderState extends State<ImgUploader> {
                                               String id = '1';
 
                                               try {
-                                                  Response res = await dio.get('http://127.0.0.1:8000/photo/getuserid/');
+                                                  Response res = await dio.get('https://test1234aaabbb.herokuapp.com/photo/getuserid/');
                                                   if (res.statusCode == 200) {
                                                       id = res.data.toString();
                                                   }
@@ -91,14 +91,14 @@ class ImgUploaderState extends State<ImgUploader> {
                                               }
 
 
-                                              await picker.uploadImage('http://127.0.0.1:8000/photo/uploadedphotos/', id);
-                                              await pickerInd.uploadImage('http://127.0.0.1:8000/photo/uploadedtags/', id);
+                                              await picker.uploadImage('https://test1234aaabbb.herokuapp.com/photo/uploadedphotos/', id);
+                                              await pickerInd.uploadImage('https://test1234aaabbb.herokuapp.com/photo/uploadedtags/', id);
 
                                               dio = Dio();
                                               String indexes = '';
 
                                               try {
-                                                  Response res = await dio.post('http://127.0.0.1:8000/photo/getindex/', data: id);
+                                                  Response res = await dio.post('https://test1234aaabbb.herokuapp.com/photo/getindex/', data: id);
                                                   if (res.statusCode == 200) {
                                                       indexes = res.data;
                                                   }
