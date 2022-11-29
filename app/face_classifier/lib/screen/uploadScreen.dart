@@ -77,38 +77,49 @@ class ImgUploaderState extends State<ImgUploader> {
                                           onPressed: !picker.imgEmpty() && !pickerInd.imgEmpty() ?
                                               () async {
                                               Dio dio = Dio();
-                                              String id = '';
+                                              String id = '1';
 
                                               try {
-                                                  Response res = await dio.get('userid');
+                                                  Response res = await dio.get('https://faceclassifier.herokuapp.com/photo/getuserid/');
                                                   if (res.statusCode == 200) {
-                                                      id = res.data;
+                                                      id = res.data.toString();
+                                                      debugPrint(id);
                                                   }
                                               } catch (e) {
                                                   Exception(e);
-                                              } finally {
-                                                  dio.close();
                                               }
 
-                                              picker.uploadImage('/$id/image');
-                                              pickerInd.uploadImage('/$id/imageInd');
 
-                                              List<List<int>> indexes = [[]];
+                                              await picker.uploadImage('https://faceclassifier.herokuapp.com/photo/uploadedphotos/', id, dio);
+                                              await pickerInd.uploadImage('https://faceclassifier.herokuapp.com/photo/uploadedtags/', id, dio);
+
+                                              String indexes = '';
 
                                               try {
-                                                  Response res = await dio.get('$id/index');
+                                                  Response res = await dio.post('https://faceclassifier.herokuapp.com/photo/getindex/', data: id);
                                                   if (res.statusCode == 200) {
                                                       indexes = res.data;
+                                                      debugPrint('index$indexes');
                                                   }
                                               } catch (e) {
                                                   Exception(e);
                                               } finally {
                                                   dio.close();
                                               }
+                                              debugPrint(indexes.toString());
 
-                                              List<List<XFile>> images = List.generate(indexes.length,
-                                                  (index) => picker.getImageAtIndex(indexes[index])
-                                              );
+                                              List<List<XFile>> images = [];
+                                              int curpos = 0;
+                                              for(int i = 0; i < pickerInd.pickedImgs.length; i++){
+                                                  images.add([]);
+                                                  for(int j = 0; j < picker.pickedImgs.length; j++){
+                                                      if(indexes[curpos] == '1'){
+                                                          images[i].add(picker.pickedImgs[j]);
+                                                      }
+                                                      curpos ++;
+                                                  }
+                                              }
+
                                               Navigator.push(
                                                   context,
                                                   CupertinoPageRoute(builder: (context) => ResultReporter(loadedImgs: images, loadedImgsInd: pickerInd.pickedImgs))

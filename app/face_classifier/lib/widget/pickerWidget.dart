@@ -15,7 +15,7 @@ class PickerWidget extends StatefulWidget{
 
     List<XFile> getImageAtIndex(List<int> indexes) {
         return List.generate(indexes.length,
-                (index) => pickedImgs[indexes[index]]
+            (index) => pickedImgs[indexes[index]]
         );
     }
 
@@ -23,25 +23,23 @@ class PickerWidget extends StatefulWidget{
         return pickedImgs.isEmpty;
     }
 
-    void uploadImage(String pos) async{
-        Dio dio = Dio();
-        final List<MultipartFile> files = pickedImgs.map((img) => MultipartFile.fromFileSync(img.path,  contentType: MediaType("image", "jpg"))).toList();
-        FormData formData = FormData.fromMap({"key": files});
-        dio.options.contentType = 'multipart/form-data';
-        try {
-            final res = await dio.post(pos, data: formData);
-            if(res.statusCode == 200){
-                // ok
-
-            } else {
-                // error
-                
-                return;
+    Future<void> uploadImage(String pos, String id, Dio dio) async{
+        for(int i = 0; i < pickedImgs.length; i++){
+            FormData body = FormData.fromMap({'user_id': id});
+            body.files.add(MapEntry('image', MultipartFile.fromBytes(await pickedImgs[i].readAsBytes(), filename: i.toString() + '.' + pickedImgs[i].name.split('.')[1])));
+            try {
+                final res = await dio.post(pos, data: body);
+                if(res.statusCode == 200){
+                    debugPrint('Ok');
+                } else {
+                    // error
+                    debugPrint(res.statusCode.toString());
+                    return;
+                }
+            } catch (e) {
+                debugPrint('$e');
+                Exception(e);
             }
-        } catch (e) {
-            Exception(e);
-        } finally {
-            dio.close();
         }
     }
 

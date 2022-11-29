@@ -38,6 +38,7 @@ dependencies:
   http_parser: ^4.0.2
   image_picker: ^0.8.6
   share_plus: ^6.2.0
+  universal_io: ^2.0.4
 
 dev_dependencies:
   flutter_test:
